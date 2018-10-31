@@ -40,14 +40,13 @@
    pepipost -sendemail -key 'Secret apikey here' -f 'from@mypepi.com' -t 'recipient@gmail.com' -s 'Pepipost Linux Agent' -b 'Hi, this is pepipost Agent for sending email' -a "myattachmentfile.pdf" 
   
    options are
-    -key apikey 
-    -s Subject
-    -f from
-    -t to
-    -B bcc
-    -b Body (should accept both html and text)
-    -a file to attach 
-    -h X-apiheader
+    -key  apikey from your pepipost account 
+    -s    Subject of your email
+    -f    from email 
+    -t    to recipient of your email
+    -B    bcc for your email
+    -b    Body of your email (should accept both html and text)
+    -a    attachment to be passed in your email
     
   ```
   
@@ -57,11 +56,11 @@
     pepipost -fetchreports -key 'secret apikey here' -events 'open,click,unsub,dropped' -sdate 'YYYY-MM-DD' -edate 'YYYY-MM-DD' -t 'recipient@gmail.com'
   
     options are
-    -key apikey
-    -events comma separated or any delimiter for appending flags in api
-    -sdate startdate
-    -edate enddate
-    -t toemailid
+    -key      apikey from your pepipost account
+    -events   comma-separated or any delimiter for appending flags in api
+    -sdate    start-date from which date your reports need to generated
+    -edate    end-date will be till which date you need your report 
+    -t        to recipient of your email
   ```
   
    Similary more cli can be made that totally depends on you.
