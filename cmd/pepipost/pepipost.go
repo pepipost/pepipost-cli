@@ -63,7 +63,7 @@ func init(){
 
 
 func main(){
-	if len(os.Args) == 5  {
+	if len(os.Args) <1   {
 		fmt.Print("pepipost : missing OPTIONS\nUsage : Pepipost [COMMANDS]... [OPTIONS]... \n\nTry pepipost --help\n")
 	}else {
 		runPepi()
