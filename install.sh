@@ -9,7 +9,12 @@ printf "Compiled file 1..\n"
 `go get github.com/briandowns/spinner`
 printf "Compiled file 2..\n"
 `go get github.com/olekukonko/tablewriter`
-printf "Compiled file 3..\n\n"
+printf "Compiled file 3..\n"
+`go get github.com/apimatic/unirest-go`
+printf "Compiled file 4..\n"
+`go get github.com/domodwyer/mailyak`
+printf "Compiled file 5..\n\n"
+
 
 printf "Compilation Completed\n\n"
 
