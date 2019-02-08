@@ -73,7 +73,6 @@ func init(){
 			Usage: "Emailid you want to keep send in reply to id",
 		}, cli.StringFlag{ //passing custom header
 			Name:  "header, x",
-			Value: "Pepimail Header",
 			Usage: "Pass custom Header in an email",
 		}, cli.StringFlag{ //adding attachement in an email
 			Name:  "attach, a",
@@ -93,8 +92,16 @@ func Sendmail(a *cli.Context) (string , error) {
 	spin := spinner.New(spinner.CharSets[43], 100*time.Millisecond)
 	spin.Start()
 
+
 	smtpuser := os.Getenv("PEPISMTPUSER")
+	if len(a.String("u")) != 0 {
+		smtpuser = a.String("u")
+	}
 	smtppass := os.Getenv("PEPISMTPPASS")
+
+	if len(a.String("p")) != 0{
+		smtppass = a.String("p")
+	}
 
 	//Setting Authentication
 	domain := a.String("d") + ":" + a.String("P")
