@@ -84,4 +84,23 @@ export PEPIKEY="e8a874fbd6f35fffdsafdsfa230879205"
 ```
 * Fetching logs for email activity
 
+`pepipost fetchLogs -h`
 
+   **OR**
+
+```shell
+ pepipost fetchLogs
+
+	-K 		dfadfadfjdkfjiojrkldfniodsjf34iu38oirn3		#this will override your enviroment variable(not recommended)										#
+	-e 		processed,open,click,unsubscribe,bounce,softbounce,spam,invalid,dropped,hardbounce	#by default it will consider all
+	-srt 	asc,desc	                        #by default it will be ascending
+	-stdate	2019-02-11	                        #by default it will take last 90 days		
+	-edate	2019-02-11	                        #by default it will be for today
+	-s      "excat subject you want to search"													
+	-l		5				#limit max=100 , default =10 
+	-o		12				#Point in the list to begin retrieving data
+	-x 		"search using x-apiheader pass"	#Filter logs based on x-apiheader
+	-m 		myemail@gmail.com		#Filter logs based on email
+	-fa		info@pepipost.com		#Filter logs based on fromaddress
+
+```
