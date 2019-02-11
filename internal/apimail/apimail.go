@@ -8,8 +8,8 @@ import (
 	"io/ioutil"
 	"path/filepath"
 	b64 "encoding/base64"
-	"github.com/pepipost/pepipost_lib/pepipost_pkg"
-	"github.com/pepipost/pepipost_lib/models_pkg"
+	"github.com/pepipost/pepipost-sdk-go/pepipost_lib/pepipost_pkg"
+	"github.com/pepipost/pepipost-sdk-go/pepipost_lib/models_pkg"
 	"github.com/briandowns/spinner"
 	"github.com/urfave/cli"
 )
