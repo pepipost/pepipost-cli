@@ -10,9 +10,9 @@ import(
 	"net/smtp"
 	"io/ioutil"
 	"path/filepath"
-	"github.com/urfave/cli"
-	"github.com/briandowns/spinner"
-	"github.com/domodwyer/mailyak"
+	"linux-agent-pepipost/vendor/github.com/urfave/cli"
+	"linux-agent-pepipost/vendor/github.com/briandowns/spinner"
+	"linux-agent-pepipost/vendor/github.com/domodwyer/mailyak"
 )
 
 var(

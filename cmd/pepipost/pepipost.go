@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 	"os"
-	"github.com/urfave/cli"
-	"github.com/pepipost/linux-agent-pepipost/internal/smtpmail"
-	"github.com/pepipost/linux-agent-pepipost/internal/apimail"
-	"github.com/pepipost/linux-agent-pepipost/internal/reports"
+	"linux-agent-pepipost/vendor/github.com/urfave/cli"
+	"linux-agent-pepipost/internal/smtpmail"
+	"linux-agent-pepipost/internal/apimail"
+	"linux-agent-pepipost/internal/reports"
 )
 
 var (
