@@ -32,12 +32,12 @@ export PEPIKEY="e8a874fbd6f35fffdsafdsfa230879205"
 
 `pepipost smtpEmail -h`
 
-**OR**
+   **OR**
 
 ```shell
   
-pepipost smtpEmail 
-
+ pepipost smtpEmail 
+ 
 	-d	smtp.pepipost.com 
 	-P	25/465/587
 	-u	smtpusername                                            #this will override your enviroment variable(not recommended)
@@ -61,13 +61,13 @@ pepipost smtpEmail
 
 `pepipost apiEmail -h`
 
-**OR**
+   **OR**
 
 ```shell
 
-pepipost apiEmail
+ pepipost apiEmail
 
-  -K  "kfdjkanf dasjkfi38yirekjbfidsnk"               #this will override your enviroment variable(not recommended)
+	-K  "kfdjkanf dasjkfi38yirekjbfidsnk"               #this will override your enviroment variable(not recommended)
 	-fn	fromname
 	-f	info@yourregisterdomainwithpepipost.com
 	-t	recipient1@gmail.com 
@@ -82,3 +82,6 @@ pepipost apiEmail
 	-a 	"/tmp/mypdfforpepi.pdf"                         #attachment if any can pass multiple
 
 ```
+* Fetching logs for email activity
+
+
