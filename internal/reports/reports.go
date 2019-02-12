@@ -97,78 +97,78 @@ func Getflags() []cli.Flag{
 	return reportingflags
 }
 
-func Fetchlogs(a *cli.Context) {
-
-	spin := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
-	spin.Start()
-	ApiKey := os.Getenv("PEPIKEY")
-	if len(a.String("K")) != 0 {
-		ApiKey = a.String("K")
-	}
-
-	api_events := a.String("e")
-	sort_ordr := a.String("srt")
-	st_date := time.Now().AddDate(0, 0, -90).Format("2006-01-02")
-	if len(a.String("stdate")) != 0{
-		st_date = a.String("stdate")
-	}
-	ed_date := a.String("edate")
-	sub := a.String("s")
-	email := a.String("m")
-	xheader := a.String("x")
-	offset := a.String("o")
-	limit := a.String("l")
-	fromadd := a.String("fa")
-
-
-
-	URL := "https://api.pepipost.com/v2/logs?sort=" + sort_ordr + "&startdate=" + st_date + "&enddate=" + ed_date + "&limit=" + limit + "&email=" + email + "&offset=" + offset + "&events=" + api_events + "&xapiheader=" + xheader + "&subject" + sub + "&fromaddress" + fromadd
-
-	req, _ := http.NewRequest("GET", URL, nil)
-	req.Header.Add("api_key",ApiKey )
-	res, _ := http.DefaultClient.Do(req)
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	arr := output{}
-	json.Unmarshal([]byte(body), &arr)
-	tbl_data := [][]string{}
-
-	for i := range arr.Data{
-		mytid := strconv.FormatInt(arr.Data[i].TransId,10)
-		tidsize := strconv.FormatInt(arr.Data[i].Size,10)
-
-
-		myrow := []string{mytid,arr.Data[i].Rcptemail,arr.Data[i].Fromid,arr.Data[i].ReqTime,arr.Data[i].DelTime,arr.Data[i].ModTime,arr.Data[i].Status,tidsize,url.QueryEscape(arr.Data[i].Subject),arr.Data[i].Xheader,arr.Data[i].Tags,"","","","","",url.QueryEscape(arr.Data[i].Remarks)}
-
-		//Opens status
-		if arr.Data[i].Status == "open"{
-			for l := range arr.Data[i].Opens{
-				myrow:= []string{mytid,arr.Data[i].Rcptemail,arr.Data[i].Fromid,arr.Data[i].ReqTime,arr.Data[i].DelTime,arr.Data[i].ModTime,arr.Data[i].Status,tidsize,url.QueryEscape(arr.Data[i].Subject),arr.Data[i].Xheader,arr.Data[i].Tags,arr.Data[i].Opens[l].IP,arr.Data[i].Opens[l].Time,"","","",url.QueryEscape(arr.Data[i].Remarks)}
-				tbl_data = append(tbl_data,myrow)
-			}
+func Fetchlogs(a *cli.Context) string{
+	if a.Args().Present() {
+		spin := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
+		spin.Start()
+		ApiKey := os.Getenv("PEPIKEY")
+		if len(a.String("K")) != 0 {
+			ApiKey = a.String("K")
 		}
 
-		//Click Status
-		if arr.Data[i].Status == "click"{
-			for l := range arr.Data[i].Clicks{
-				myrow:= []string{mytid,arr.Data[i].Rcptemail,arr.Data[i].Fromid,arr.Data[i].ReqTime,arr.Data[i].DelTime,arr.Data[i].ModTime,arr.Data[i].Status,tidsize,url.QueryEscape(arr.Data[i].Subject),arr.Data[i].Xheader,arr.Data[i].Tags,"","",arr.Data[i].Clicks[l].IP,arr.Data[i].Clicks[l].Time,arr.Data[i].Clicks[l].Link,url.QueryEscape(arr.Data[i].Remarks)}
-				tbl_data = append(tbl_data,myrow)
+		api_events := a.String("e")
+		sort_ordr := a.String("srt")
+		st_date := time.Now().AddDate(0, 0, -90).Format("2006-01-02")
+		if len(a.String("stdate")) != 0{
+			st_date = a.String("stdate")
+		}
+		ed_date := a.String("edate")
+		sub := a.String("s")
+		email := a.String("m")
+		xheader := a.String("x")
+		offset := a.String("o")
+		limit := a.String("l")
+		fromadd := a.String("fa")
+
+
+
+		URL := "https://api.pepipost.com/v2/logs?sort=" + sort_ordr + "&startdate=" + st_date + "&enddate=" + ed_date + "&limit=" + limit + "&email=" + email + "&offset=" + offset + "&events=" + api_events + "&xapiheader=" + xheader + "&subject" + sub + "&fromaddress" + fromadd
+
+		req, _ := http.NewRequest("GET", URL, nil)
+		req.Header.Add("api_key",ApiKey )
+		res, _ := http.DefaultClient.Do(req)
+		defer res.Body.Close()
+		body, _ := ioutil.ReadAll(res.Body)
+
+		arr := output{}
+		json.Unmarshal([]byte(body), &arr)
+		tbl_data := [][]string{}
+
+		for i := range arr.Data{
+			mytid := strconv.FormatInt(arr.Data[i].TransId,10)
+			tidsize := strconv.FormatInt(arr.Data[i].Size,10)
+
+
+			myrow := []string{mytid,arr.Data[i].Rcptemail,arr.Data[i].Fromid,arr.Data[i].ReqTime,arr.Data[i].DelTime,arr.Data[i].ModTime,arr.Data[i].Status,tidsize,url.QueryEscape(arr.Data[i].Subject),arr.Data[i].Xheader,arr.Data[i].Tags,"","","","","",url.QueryEscape(arr.Data[i].Remarks)}
+
+			//Opens status
+			if arr.Data[i].Status == "open"{
+				for l := range arr.Data[i].Opens{
+					myrow:= []string{mytid,arr.Data[i].Rcptemail,arr.Data[i].Fromid,arr.Data[i].ReqTime,arr.Data[i].DelTime,arr.Data[i].ModTime,arr.Data[i].Status,tidsize,url.QueryEscape(arr.Data[i].Subject),arr.Data[i].Xheader,arr.Data[i].Tags,arr.Data[i].Opens[l].IP,arr.Data[i].Opens[l].Time,"","","",url.QueryEscape(arr.Data[i].Remarks)}
+					tbl_data = append(tbl_data,myrow)
+				}
 			}
+
+			//Click Status
+			if arr.Data[i].Status == "click"{
+				for l := range arr.Data[i].Clicks{
+					myrow:= []string{mytid,arr.Data[i].Rcptemail,arr.Data[i].Fromid,arr.Data[i].ReqTime,arr.Data[i].DelTime,arr.Data[i].ModTime,arr.Data[i].Status,tidsize,url.QueryEscape(arr.Data[i].Subject),arr.Data[i].Xheader,arr.Data[i].Tags,"","",arr.Data[i].Clicks[l].IP,arr.Data[i].Clicks[l].Time,arr.Data[i].Clicks[l].Link,url.QueryEscape(arr.Data[i].Remarks)}
+					tbl_data = append(tbl_data,myrow)
+				}
+			}
+
+			tbl_data = append(tbl_data,myrow)
 		}
 
-		tbl_data = append(tbl_data,myrow)
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"TransId", "rcptEmail", "fromaddress", "requestedTime","deliveryTime","modifiedTime","status","size","subject","xapiheader","tags","OpenIP","Opentime","ClickIP","ClickTime","ClickLink","Remarks"})
+		table.SetAlignment(tablewriter.ALIGN_LEFT)   // Set Alignment
+		for _, v := range tbl_data {
+			table.Append(v)
+		}
+		table.SetFooter([]string{"", "","","","","","","","","","","Status",arr.Status,"LimitPass",limit,"TotalRecords",strconv.FormatInt(arr.TotRec,10)}) // Add Footer
+		spin.Stop()
+		table.Render()
 	}
-
-	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"TransId", "rcptEmail", "fromaddress", "requestedTime","deliveryTime","modifiedTime","status","size","subject","xapiheader","tags","OpenIP","Opentime","ClickIP","ClickTime","ClickLink","Remarks"})
-	table.SetAlignment(tablewriter.ALIGN_LEFT)   // Set Alignment
-	for _, v := range tbl_data {
-		table.Append(v)
-	}
-	table.SetFooter([]string{"", "","","","","","","","","","","Status",arr.Status,"LimitPass",limit,"TotalRecords",strconv.FormatInt(arr.TotRec,10)}) // Add Footer
-	spin.Stop()
-	table.Render()
-
+	return "NO Arguments Passed for fetchLogs\nTry pepipost fetchLogs -h [arguments]...\n\n"
 }
-

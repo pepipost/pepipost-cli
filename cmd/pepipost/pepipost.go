@@ -28,11 +28,11 @@ func init(){
 			Flags: smtpmail.Getflags(),
 			Action: func(c *cli.Context) {
 				status,errcode,err_response := smtpmail.Sendmail(c)
-				if err_response != nil { status = "Error" } else { status = "Success" }
 				if errcode == 2 {
 					fmt.Print(status)
 					return
 					}
+				if err_response != nil { status = "Error" } else { status = "Success" }
 				fmt.Println("Status of Email 	:: ",status)
 				fmt.Println("Error Response of Email :: ",err_response)
 				return
@@ -71,7 +71,7 @@ func init(){
 
 
 func main(){
-	if len(os.Args) == 5  {
+	if len(os.Args) == 0  {
 		fmt.Print("pepipost : missing OPTIONS\nUsage : Pepipost [COMMANDS]... [OPTIONS]... \n\nTry pepipost --help\n")
 	}else {
 		runPepi()
@@ -95,8 +95,10 @@ func runPepi(){
 
 
 func noArgs(c *cli.Context) error {
-	cli.ShowAppHelp(c)
-	return cli.NewExitError("No Options provided for command", 2)
+	return cli.NewExitError(`pepipost: missing COMMAND 
+Usage: pepipost [COMMAND]... [ARGUMENT]...
+
+Try pepipost --help for more options.`, 2)
 }
 
 

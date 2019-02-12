@@ -87,9 +87,9 @@ func Getflags() []cli.Flag{
 
 func Sendmail(a *cli.Context) (string ,int, error) {
 
+	if a.Args().Present() {
 	fmt.Print("\nSending Email through SMTP\n")
 
-	if a.Args().Present() {
 		spin := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 		spin.Start()
 
@@ -163,7 +163,7 @@ func Sendmail(a *cli.Context) (string ,int, error) {
 			return "",1,err
 		}
 	}
-	return "NO Arguments Passed for SmtpEmail\nTry pepipost SmtpEmail -h [arguments]...\n", 2, nil
+	return "NO Arguments Passed for SmtpEmail\nTry pepipost SmtpEmail -h [arguments]...\n\n", 2, nil
 
 }
 
