@@ -27,8 +27,12 @@ func init(){
 			Description: "Used to send Email through SMTP protocol. We recommend to set your smtpusername and smtppassword as enviroment variable for security reason",
 			Flags: smtpmail.Getflags(),
 			Action: func(c *cli.Context) {
-				status,err_response := smtpmail.Sendmail(c)
+				status,errcode,err_response := smtpmail.Sendmail(c)
 				if err_response != nil { status = "Error" } else { status = "Success" }
+				if errcode == 2 {
+					fmt.Print(status)
+					return
+					}
 				fmt.Println("Status of Email 	:: ",status)
 				fmt.Println("Error Response of Email :: ",err_response)
 				return
