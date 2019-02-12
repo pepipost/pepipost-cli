@@ -15,7 +15,8 @@ For apiEmail and tracking of the email you need to have [Pepipost](http://www.pe
 
 ## Installation
 
-`git clone github.com/pepipost/linux-agent-pepipost $GOPATH/src/`
+`cd $GOPATH/src/ && git clone github.com/pepipost/pepipost-cli.git && cd $GOPATH/src/pepipost-cli && go install cmd/pepipost/pepipost.go && $GOPATH/bin/./pepipost -h`
+
 
 ## Setting Enviroment variable.
 
