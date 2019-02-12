@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 	"github.com/urfave/cli"
-	"linux-agent-pepipost/internal/smtpmail"
-	"linux-agent-pepipost/internal/apimail"
-	"linux-agent-pepipost/internal/reports"
+	"pepipost-cli/internal/smtpmail"
+	"pepipost-cli/internal/apimail"
+	"pepipost-cli/internal/reports"
 )
 
 var (
