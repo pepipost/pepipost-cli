@@ -30,10 +30,10 @@ func init(){
 			Value: "25",
 			Usage: "SMTP PeerPort",
 		}, cli.StringFlag{ //smtpuser
-			Name:  "user, u",
+			Name:  "User, u",
 			Usage: "smtpauth user",
 		}, cli.StringFlag{ //smtppass
-			Name:  "pass, p",
+			Name:  "Pass, p",
 			Usage: "smtpauth passwd",
 		}, cli.StringFlag{ //fromid
 			Name:  "From, f",
@@ -56,26 +56,26 @@ func init(){
 			Value: "info@nullvalue.net",
 			Usage: "recipient email address",
 		}, cli.StringFlag{ //recipients_cc
-			Name:  "cc, c",
+			Name:  "CC, c",
 			Usage: "CC recipients",
 		}, cli.StringFlag{ //recipients_bcc
-			Name:  "bcc, B",
+			Name:  "Bcc, B",
 			Usage: "bcc recipients for your email",
 		}, cli.StringFlag{ //html data
-			Name:  "htmltext, z",
+			Name:  "Htmltext, z",
 			Value: "",
-			Usage: "html data in text format",
+			Usage: "Html data in text format",
 		}, cli.StringFlag{ //html data from particular path in filename.html
-			Name:  "htmlpath, Z",
+			Name:  "Htmlpath, Z",
 			Usage: "html data in text format",
 		}, cli.StringFlag{ //reply-to-id
-			Name:  "replytoid, r",
+			Name:  "Replytoid, r",
 			Usage: "Emailid you want to keep send in reply to id",
 		}, cli.StringFlag{ //passing custom header
-			Name:  "header, x",
+			Name:  "Header, x",
 			Usage: "Pass custom Header in an email",
 		}, cli.StringFlag{ //adding attachement in an email
-			Name:  "attach, a",
+			Name:  "Attach, a",
 			Usage: "attachment to be sent in an email",
 		},
 	}
@@ -87,8 +87,9 @@ func Getflags() []cli.Flag{
 
 func Sendmail(a *cli.Context) (string ,int, error) {
 
-	if a.Args().Present() {
-	fmt.Print("\nSending Email through SMTP\n")
+	if a.NumFlags() !=0 {
+
+		fmt.Print("\nSending Email through SMTP\n")
 
 		spin := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 		spin.Start()

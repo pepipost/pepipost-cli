@@ -87,6 +87,7 @@ func runPepi(){
 	app.Version = "1.0.0, For linux"
 	app.Description = "Pepipost now allows sending email,fetching stats,real-time reports using command line interface. Use below instructions to send email using ‘Pepipost‘ command."
 	app.Authors = author
+	app.Copyright = "(c) 2018 Pepipost"
 	app.Commands = cmds
 	app.Action = noArgs
 	app.Run(os.Args)

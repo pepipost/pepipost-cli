@@ -98,7 +98,7 @@ func Getflags() []cli.Flag{
 }
 
 func Fetchlogs(a *cli.Context) string{
-	if a.Args().Present() {
+	if a.NumFlags() !=0  {
 		spin := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 		spin.Start()
 		ApiKey := os.Getenv("PEPIKEY")

@@ -84,7 +84,7 @@ func Getflags() []cli.Flag{
 
 func Sendmail(a *cli.Context) (string,int){
 
-	if a.Args().Present() {
+	if a.NumFlags() !=0 {
 
 		spin := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
 		spin.Start()
