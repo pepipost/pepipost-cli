@@ -1,4 +1,4 @@
-# Linux-Agent-Pepipost :penguin:
+# Pepipost-Cli(Linux) :penguin:
 
 ## Introduction
 
