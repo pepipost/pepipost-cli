@@ -84,102 +84,107 @@ func Getflags() []cli.Flag{
 
 func Sendmail(a *cli.Context) (string,int){
 
-	spin := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
-	spin.Start()
+	if a.Args().Present() {
 
-	client := PepipostClient.NewPEPIPOST()
-	email := client.Email()
-	ApiKey := os.Getenv("PEPIKEY")
+		spin := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
+		spin.Start()
 
-	if len(a.String("K")) != 0 {
-		ApiKey = a.String("K")
-	}
+		client := PepipostClient.NewPEPIPOST()
+		email := client.Email()
+		ApiKey := os.Getenv("PEPIKEY")
 
-	username := a.String("t")
-	fromEmail := a.String("f")
-	fromName := a.String("fn")
-	subject := a.String("s")
+		if len(a.String("K")) != 0 {
+			ApiKey = a.String("K")
+		}
 
-	//plain body text to be passed
-	body :=  a.String("b")
+		username := a.String("t")
+		fromEmail := a.String("f")
+		fromName := a.String("fn")
+		subject := a.String("s")
 
-	//EmailBody passing in html format while taking from path
-	if len(a.String("Z")) != 0 {
-		body = getHtmlContent(a.String("Z"))
-	} else if len(a.String("z")) != 0 {
-		body = a.String("z")
-	}
+		//plain body text to be passed
+		body :=  a.String("b")
 
-	Body := &models_pkg.EmailBody{}
-	Body.Personalizations = make([]*models_pkg.Personalizations,3)
-	Body.Personalizations[0] = &models_pkg.Personalizations{}
-	Body.Personalizations[0].Recipient = &username
+		//EmailBody passing in html format while taking from path
+		if len(a.String("Z")) != 0 {
+			body = getHtmlContent(a.String("Z"))
+		} else if len(a.String("z")) != 0 {
+			body = a.String("z")
+		}
 
-	if len(a.String("c")) != 0 {
-		rcpt_cc := strings.Split(a.String("c"), ",")
-		Body.Personalizations[0].RecipientCc = &rcpt_cc
-	}
+		Body := &models_pkg.EmailBody{}
+		Body.Personalizations = make([]*models_pkg.Personalizations,3)
+		Body.Personalizations[0] = &models_pkg.Personalizations{}
+		Body.Personalizations[0].Recipient = &username
 
-	Body.From = models_pkg.From{}
-	Body.From.FromEmail = &fromEmail
-	Body.From.FromName = &fromName
-	Body.Subject = &subject
-	Body.Content = &body
+		if len(a.String("c")) != 0 {
+			rcpt_cc := strings.Split(a.String("c"), ",")
+			Body.Personalizations[0].RecipientCc = &rcpt_cc
+		}
 
-	if len(a.String("a")) !=0 {
-		Body.Attachments = make([]*models_pkg.EmailBodyAttachments,3)
-		attach := strings.Split(a.String("a"), ",")
-		for index,element := range attach{
-			mydata := getHtmlContent(element) //Getting buff
-			if mydata == "Error while fetching attachment"{
-			return mydata,1
+		Body.From = models_pkg.From{}
+		Body.From.FromEmail = &fromEmail
+		Body.From.FromName = &fromName
+		Body.Subject = &subject
+		Body.Content = &body
+
+		if len(a.String("a")) !=0 {
+			Body.Attachments = make([]*models_pkg.EmailBodyAttachments,3)
+			attach := strings.Split(a.String("a"), ",")
+			for index,element := range attach{
+				mydata := getHtmlContent(element) //Getting buff
+				if mydata == "Error while fetching attachment"{
+					return mydata,1
+				}
+				fdata := b64.StdEncoding.EncodeToString([]byte(mydata))
+				fname := filepath.Base(element)
+				Body.Attachments[index] = &models_pkg.EmailBodyAttachments{}
+				Body.Attachments[index].FileContent = &fdata
+				Body.Attachments[index].FileName = &fname
 			}
-			fdata := b64.StdEncoding.EncodeToString([]byte(mydata))
-			fname := filepath.Base(element)
-			Body.Attachments[index] = &models_pkg.EmailBodyAttachments{}
-			Body.Attachments[index].FileContent = &fdata
-			Body.Attachments[index].FileName = &fname
+		}
+
+		//	email settings
+
+		Body.Settings = models_pkg.Settings{}
+		defaultval := int64(1)
+		Body.Settings.Footer = &defaultval
+		Body.Settings.Clicktrack = &defaultval
+		Body.Settings.Opentrack = &defaultval
+		Body.Settings.Unsubscribe = &defaultval
+
+		if len(a.String("B")) !=0{
+			bccid := a.String("B")
+			Body.Settings.Bcc = &bccid
+		}
+
+		if len(a.String("r")) !=0{
+			rtoid := a.String("r")
+			Body.ReplyToId = &rtoid
+		}
+		if a.Int("tid") !=0{
+			templateid := int64(a.Int("tid"))
+			Body.TemplateId = &templateid
+		}
+
+		var err error
+		var result *models_pkg.SendEmailResponse
+		result, err = email.CreateSendEmail(&ApiKey, Body)
+		errstatus := 0
+		if err != nil{
+			//TODO: Use err variable here
+			spin.Stop()
+			return result.Message,errstatus
+		}else{
+			//TODO: Use result variable here
+			spin.Stop()
+			errstatus := 1
+			result1 := result.Message + "\nError Message :: " + result.ErrorInfo.ErrorMessage 
+			return  result1,errstatus
 		}
 	}
-
-	//	email settings
-
-	Body.Settings = models_pkg.Settings{}
-	defaultval := int64(1)
-	Body.Settings.Footer = &defaultval
-	Body.Settings.Clicktrack = &defaultval
-	Body.Settings.Opentrack = &defaultval
-	Body.Settings.Unsubscribe = &defaultval
-
-	if len(a.String("B")) !=0{
-		bccid := a.String("B")
-		Body.Settings.Bcc = &bccid
-	}
-
-	if len(a.String("r")) !=0{
-		rtoid := a.String("r")
-		Body.ReplyToId = &rtoid
-	}
-	if a.Int("tid") !=0{
-		templateid := int64(a.Int("tid"))
-		Body.TemplateId = &templateid
-	}
-
-	var err error
-	var result *models_pkg.SendEmailResponse
-	result, err = email.CreateSendEmail(&ApiKey, Body)
-	errstatus := 0
-	if err != nil{
-		//TODO: Use err variable here
-		spin.Stop()
-		return result.Message,errstatus
-	}else{
-		//TODO: Use result variable here
-		spin.Stop()
-		errstatus := 1
-		result1 := result.Message + "\nError Message :: " + result.ErrorInfo.ErrorMessage 
-		return  result1,errstatus
-	}
+	cli.ShowSubcommandHelp(a)
+	return "NO Arguments Passed for apiEmail", 3
 }
 
 func getHtmlContent(path string) string {
@@ -190,3 +195,4 @@ func getHtmlContent(path string) string {
 	}
 	return string(data)
 }
+

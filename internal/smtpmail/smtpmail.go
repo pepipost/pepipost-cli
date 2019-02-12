@@ -89,78 +89,82 @@ func Sendmail(a *cli.Context) (string , error) {
 
 	fmt.Print("\nSending Email through SMTP\n")
 
-	spin := spinner.New(spinner.CharSets[43], 100*time.Millisecond)
-	spin.Start()
+	if a.Args().Present() {
+		spin := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
+		spin.Start()
 
 
-	smtpuser := os.Getenv("PEPISMTPUSER")
-	if len(a.String("u")) != 0 {
-		smtpuser = a.String("u")
+		smtpuser := os.Getenv("PEPISMTPUSER")
+		if len(a.String("u")) != 0 {
+			smtpuser = a.String("u")
+		}
+		smtppass := os.Getenv("PEPISMTPPASS")
+
+		if len(a.String("p")) != 0{
+			smtppass = a.String("p")
+		}
+
+		//Setting Authentication
+		domain := a.String("d") + ":" + a.String("P")
+		mail := mailyak.New(domain, smtp.PlainAuth("", smtpuser, smtppass, a.String("d"))) //auth
+
+		//Setting To email address
+		toemailids := strings.Split(a.String("t"), ",")
+		mail.To(toemailids...)
+
+		//Setting CC email address
+		if len(a.String("c")) != 0 {
+			ccemailids := strings.Split(a.String("c"), ",")
+			mail.Cc(ccemailids...)
+		}
+
+		//Setting BCC email address
+		if len(a.String("B")) != 0 {
+			bccemails := strings.Split(a.String("B"), ",")
+			mail.Bcc(bccemails...)
+		}
+
+		mail.From(a.String("f"))                //fromaddress
+		mail.FromName(a.String("fn"))           //fromname
+		mail.Subject(a.String("s"))             //ToSubject
+		mail.ReplyTo(a.String("r"))             //reply to id in an email
+		mail.Plain().Set(a.String("b"))         //EmailBody in simple plain text
+
+		//passing header in SMTP mail
+		if len (a.String("x")) !=0{
+			emailHeaders := strings.Split(a.String("x"), ",")
+			mail.AddHeader(emailHeaders[0],emailHeaders[1])
+		}
+
+
+		//Sending Attachemnet in email
+		if len(a.String("a")) !=0{
+			mydata := getHtmlContent(a.String("a")) //Getting buff
+			buf := &bytes.Buffer{}
+			io.WriteString(buf, mydata)
+			mail.Attach(filepath.Base(a.String("a")), buf) //Attachment in an email
+		}
+
+		//EmailBody passing in html format while taking from path
+		if len(a.String("Z")) != 0 {
+			html := getHtmlContent(a.String("Z"))
+			mail.HTML().Set(html)
+		} else if len(a.String("z")) != 0 {
+			mail.HTML().Set(a.String("z"))
+		}
+
+		//sending email
+		if err := mail.Send(); err != nil {
+			spin.Stop()
+			return "",err
+		} else {
+			spin.Stop()
+			fmt.Println("Email Sent Successfully \n")
+			return "",err
+		}
 	}
-	smtppass := os.Getenv("PEPISMTPPASS")
-
-	if len(a.String("p")) != 0{
-		smtppass = a.String("p")
-	}
-
-	//Setting Authentication
-	domain := a.String("d") + ":" + a.String("P")
-	mail := mailyak.New(domain, smtp.PlainAuth("", smtpuser, smtppass, a.String("d"))) //auth
-
-	//Setting To email address
-	toemailids := strings.Split(a.String("t"), ",")
-	mail.To(toemailids...)
-
-	//Setting CC email address
-	if len(a.String("c")) != 0 {
-		ccemailids := strings.Split(a.String("c"), ",")
-		mail.Cc(ccemailids...)
-	}
-
-	//Setting BCC email address
-	if len(a.String("B")) != 0 {
-		bccemails := strings.Split(a.String("B"), ",")
-		mail.Bcc(bccemails...)
-	}
-
-	mail.From(a.String("f"))                //fromaddress
-	mail.FromName(a.String("fn"))           //fromname
-	mail.Subject(a.String("s"))             //ToSubject
-	mail.ReplyTo(a.String("r"))             //reply to id in an email
-	mail.Plain().Set(a.String("b"))         //EmailBody in simple plain text
-
-	//passing header in SMTP mail
-	if len (a.String("x")) !=0{
-		emailHeaders := strings.Split(a.String("x"), ",")
-		mail.AddHeader(emailHeaders[0],emailHeaders[1])
-	}
-
-
-	//Sending Attachemnet in email
-	if len(a.String("a")) !=0{
-		mydata := getHtmlContent(a.String("a")) //Getting buff
-		buf := &bytes.Buffer{}
-		io.WriteString(buf, mydata)
-		mail.Attach(filepath.Base(a.String("a")), buf) //Attachment in an email
-	}
-
-	//EmailBody passing in html format while taking from path
-	if len(a.String("Z")) != 0 {
-		html := getHtmlContent(a.String("Z"))
-		mail.HTML().Set(html)
-	} else if len(a.String("z")) != 0 {
-		mail.HTML().Set(a.String("z"))
-	}
-
-	//sending email
-	if err := mail.Send(); err != nil {
-		spin.Stop()
-		return "",err
-	} else {
-		spin.Stop()
-		fmt.Println("Email Sent Successfully \n")
-		return "",err
-	}
+	cli.ShowSubcommandHelp(a)
+	return "NO Arguments Passed for SmtpEmail", nil
 
 }
 
