@@ -8,7 +8,7 @@ This CLI is developed in generic way. So that, even if you are not using Pepipos
 
 For apiEmail and tracking of the email you need to have [Pepipost](http://www.pepipost.com/?utm_campaign=GitHublinuxagent&utm_medium=Github&utm_source=Githublinuxagent) account.
 
-*Note :: Please make user your outgoing port 25,587,463 is open for sending SMTP mail*
+*Note :: Please make sure your outgoing port 25,587,463 is open for sending SMTP mail*
         *& outgoing port 80,443 is open for sending API mail*
 	
 *This repo is under **testing phase** their might be bugs*
