@@ -1,4 +1,4 @@
-# Pepipost-Cli(Linux) :penguin:
+# Pepipost-Cli { Linux :penguin:}
 
 ## Introduction
 
