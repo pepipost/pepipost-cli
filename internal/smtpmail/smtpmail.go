@@ -163,8 +163,7 @@ func Sendmail(a *cli.Context) (string , error) {
 			return "",err
 		}
 	}
-	cli.ShowSubcommandHelp(a)
-	return "NO Arguments Passed for SmtpEmail", nil
+	return "NO Arguments Passed for SmtpEmail\nTry pepipost SmtpEmail -h", nil
 
 }
 

@@ -183,8 +183,7 @@ func Sendmail(a *cli.Context) (string,int){
 			return  result1,errstatus
 		}
 	}
-	cli.ShowSubcommandHelp(a)
-	return "NO Arguments Passed for apiEmail", 3
+	return "NO Arguments Passed for apiEmail\nTry pepipost apiEmail -h", 3
 }
 
 func getHtmlContent(path string) string {

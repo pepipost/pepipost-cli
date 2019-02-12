@@ -42,7 +42,11 @@ func init(){
 			Action: func(c *cli.Context) {
 				status,errstatus := apimail.Sendmail(c)
 				errorstatus := "Success"
-				if errstatus != 0 { errorstatus = "Error" } 
+				if errstatus != 0 { errorstatus = "Error" }
+				if errstatus == 3 { 
+					fmt.Print(status)
+					return
+				}
 				fmt.Println("Sending Status :: ",errorstatus)
 				fmt.Println("Status of API call    :: ",status)
 				return
