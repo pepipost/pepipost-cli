@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
-	"linux-agent-pepipost/vendor/github.com/urfave/cli"
+	"github.com/urfave/cli"
 	"linux-agent-pepipost/internal/smtpmail"
 	"linux-agent-pepipost/internal/apimail"
 	"linux-agent-pepipost/internal/reports"

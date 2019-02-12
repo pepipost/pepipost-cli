@@ -9,9 +9,9 @@ import (
 	"strconv"
 	"io/ioutil"
 	"encoding/json"
-	"linux-agent-pepipost/vendor/github.com/urfave/cli"
-	"linux-agent-pepipost/vendor/github.com/briandowns/spinner"
-	"linux-agent-pepipost/vendor/github.com/olekukonko/tablewriter"
+	"github.com/urfave/cli"
+	"github.com/briandowns/spinner"
+	"github.com/olekukonko/tablewriter"
 )
 
 type output struct{
