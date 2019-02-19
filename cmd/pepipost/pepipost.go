@@ -31,7 +31,7 @@ func init(){
 				if errcode == 2 {
 					fmt.Print(status)
 					return
-					}
+				}
 				if err_response != nil { status = "Error" } else { status = "Success" }
 				fmt.Println("Status of Email 	:: ",status)
 				fmt.Println("Error Response of Email :: ",err_response)
@@ -46,8 +46,8 @@ func init(){
 			Action: func(c *cli.Context) {
 				status,errstatus := apimail.Sendmail(c)
 				errorstatus := "Success"
-				if errstatus != 0 { errorstatus = "Error" }
 				if errstatus == 3 { 
+					errorstatus = "Error" 
 					fmt.Print(status)
 					return
 				}
@@ -72,7 +72,10 @@ func init(){
 
 func main(){
 	if len(os.Args) == 0  {
-		fmt.Print("pepipost : missing OPTIONS\nUsage : Pepipost [COMMANDS]... [OPTIONS]... \n\nTry pepipost --help\n")
+		fmt.Print(`pepipost : missing OPTIONS
+Usage : Pepipost [COMMANDS]... [OPTIONS]... 
+
+Try pepipost --help`)
 	}else {
 		runPepi()
 		return
@@ -87,7 +90,7 @@ func runPepi(){
 	app.Version = "1.0.0, For linux"
 	app.Description = "Pepipost now allows sending email,fetching stats,real-time reports using command line interface. Use below instructions to send email using ‘Pepipost‘ command."
 	app.Authors = author
-	app.Copyright = "(c) 2018 Pepipost"
+	app.Copyright = "(c) 2019 Pepipost"
 	app.Commands = cmds
 	app.Action = noArgs
 	app.Run(os.Args)
