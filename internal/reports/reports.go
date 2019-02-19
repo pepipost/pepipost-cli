@@ -2,16 +2,14 @@ package reports
 
 import (
 	"os"
-	//"fmt"
+	"fmt"
 	"net/http"
 	"time"
-	"net/url"
-	"strconv"
 	"io/ioutil"
 	"encoding/json"
 	"github.com/urfave/cli"
 	"github.com/briandowns/spinner"
-	"github.com/olekukonko/tablewriter"
+	"github.com/hokaccha/go-prettyjson"
 )
 
 type output struct{
@@ -132,43 +130,10 @@ func Fetchlogs(a *cli.Context) string{
 
 		arr := output{}
 		json.Unmarshal([]byte(body), &arr)
-		tbl_data := [][]string{}
 
-		for i := range arr.Data{
-			mytid := strconv.FormatInt(arr.Data[i].TransId,10)
-			tidsize := strconv.FormatInt(arr.Data[i].Size,10)
-
-
-			myrow := []string{mytid,arr.Data[i].Rcptemail,arr.Data[i].Fromid,arr.Data[i].ReqTime,arr.Data[i].DelTime,arr.Data[i].ModTime,arr.Data[i].Status,tidsize,url.QueryEscape(arr.Data[i].Subject),arr.Data[i].Xheader,arr.Data[i].Tags,"","","","","",url.QueryEscape(arr.Data[i].Remarks)}
-
-			//Opens status
-			if arr.Data[i].Status == "open"{
-				for l := range arr.Data[i].Opens{
-					myrow:= []string{mytid,arr.Data[i].Rcptemail,arr.Data[i].Fromid,arr.Data[i].ReqTime,arr.Data[i].DelTime,arr.Data[i].ModTime,arr.Data[i].Status,tidsize,url.QueryEscape(arr.Data[i].Subject),arr.Data[i].Xheader,arr.Data[i].Tags,arr.Data[i].Opens[l].IP,arr.Data[i].Opens[l].Time,"","","",url.QueryEscape(arr.Data[i].Remarks)}
-					tbl_data = append(tbl_data,myrow)
-				}
-			}
-
-			//Click Status
-			if arr.Data[i].Status == "click"{
-				for l := range arr.Data[i].Clicks{
-					myrow:= []string{mytid,arr.Data[i].Rcptemail,arr.Data[i].Fromid,arr.Data[i].ReqTime,arr.Data[i].DelTime,arr.Data[i].ModTime,arr.Data[i].Status,tidsize,url.QueryEscape(arr.Data[i].Subject),arr.Data[i].Xheader,arr.Data[i].Tags,"","",arr.Data[i].Clicks[l].IP,arr.Data[i].Clicks[l].Time,arr.Data[i].Clicks[l].Link,url.QueryEscape(arr.Data[i].Remarks)}
-					tbl_data = append(tbl_data,myrow)
-				}
-			}
-
-			tbl_data = append(tbl_data,myrow)
-		}
-
-		table := tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{"TransId", "rcptEmail", "fromaddress", "requestedTime","deliveryTime","modifiedTime","status","size","subject","xapiheader","tags","OpenIP","Opentime","ClickIP","ClickTime","ClickLink","Remarks"})
-		table.SetAlignment(tablewriter.ALIGN_LEFT)   // Set Alignment
-		for _, v := range tbl_data {
-			table.Append(v)
-		}
-		table.SetFooter([]string{"", "","","","","","","","","","","Status",arr.Status,"LimitPass",limit,"TotalRecords",strconv.FormatInt(arr.TotRec,10)}) // Add Footer
+		s, _ := prettyjson.Marshal(arr)
 		spin.Stop()
-		table.Render()
+		fmt.Print(string(s))
 	}
 	return "NO Arguments Passed for fetchLogs\nTry pepipost fetchLogs -h [arguments]...\n\n"
 }
