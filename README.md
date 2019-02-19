@@ -19,11 +19,34 @@ For apiEmail and tracking of the email you need to have [Pepipost](http://www.pe
 
 * Install using RPM
 
-`cd /tmp/ && wget https://pepipost.com/Pepipost-1.0.1-1.x86_64.rpm && sudo rpm -Uvh Pepipost-1.0.1-1.x86_64.rpm`
+`cd /tmp/ && wget https://pepipost.com/pepi_repo/Pepipost-1.0.1-1.x86_64.rpm && sudo rpm -Uvh Pepipost-1.0.1-1.x86_64.rpm`
 
 * Install using deb
 
 `cd /tmp/ && wget https://pepipost.com/pepipost.com/pepipost_1.0.0-2_amd64.deb && sudo dpkg -i pepipost_1.0.0-2_amd64.deb`
+
+* Install using yum
+
+  Open editor of your choice with sudo access we will use vim here
+
+ ```
+ sudo vim /etc/yum.repos.d/pepipost.repo
+ ```
+  Copy and paste the below lines and save file
+  
+ ```
+   [pepipost]
+   name=Pepipost Repository
+   baseurl=https://pepipost.com/pepi_repo/
+   enabled=1
+   gpgcheck=0
+
+ ```
+  Installation 
+  
+ ```
+   yum install Pepipost
+ ```
 
 
 ## Setting Enviroment variable.
