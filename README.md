@@ -19,7 +19,7 @@ For apiEmail and tracking of the email you need to have [Pepipost](http://www.pe
 
 * Install using RPM
 
-`cd /tmp/ && wget https://pepipost.com/Pepipost-1.0.0-1.x86_64.rpm && sudo rpm -Uvh Pepipost-1.0.0-1.x86_64.rpm`
+`cd /tmp/ && wget https://pepipost.com/Pepipost-1.0.1-1.x86_64.rpm && sudo rpm -Uvh Pepipost-1.0.1-1.x86_64.rpm`
 
 * Install using deb
 
