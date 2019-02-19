@@ -29,25 +29,24 @@ For apiEmail and tracking of the email you need to have [Pepipost](http://www.pe
 
   Open editor of your choice with sudo access we will use vim here
 
- ```
- sudo vim /etc/yum.repos.d/pepipost.repo
- ```
+  ```
+  sudo vim /etc/yum.repos.d/pepipost.repo
+  ```
   Copy and paste the below lines and save file
   
- ```
+  ```
    [pepipost]
    name=Pepipost Repository
    baseurl=https://pepipost.com/pepi_repo/
    enabled=1
    gpgcheck=0
 
- ```
-  Installation 
+  ```
+   Installation 
   
- ```
+  ```
    yum install Pepipost
- ```
-
+  ```
 
 ## Setting Enviroment variable.
 
