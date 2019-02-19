@@ -19,7 +19,7 @@ For apiEmail and tracking of the email you need to have [Pepipost](http://www.pe
 
 * Install using RPM
 
-`cd /tmp/ && wget https://pepipost.com/pepi_repo/Pepipost-1.0.1-1.x86_64.rpm && sudo rpm -Uvh Pepipost-1.0.1-1.x86_64.rpm`
+`cd /tmp/ && wget https://pepipost.com/centos/Pepipost-1.0.1-1.x86_64.rpm && sudo rpm -Uvh Pepipost-1.0.1-1.x86_64.rpm`
 
 * Install using deb
 
@@ -37,7 +37,7 @@ For apiEmail and tracking of the email you need to have [Pepipost](http://www.pe
   ```
    [pepipost]
    name=Pepipost Repository
-   baseurl=https://pepipost.com/pepi_repo/
+   baseurl=https://pepipost.com/centos/
    enabled=1
    gpgcheck=0
 
