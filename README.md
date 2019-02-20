@@ -4,9 +4,11 @@
 
 ## Introduction
 
-Linux agent for Pepipost is developed to send email using command line interface(CLI). This CLI not only sends email but also keeps track of emails. you can send emails using both SMTP and API.
+If you don't want to spend time in setting up the environment and write the code to simply send an email, then this CLI is the solution. This Linux agent is capable of sending emails in both the situations whether your outgoing SMTP port is blocked or not. In order to enable this, we have build support for both custom SMTP and API (in case email ports are blocked).
 
-This CLI is developed in generic way. So that, even if you are not using Pepipost you can send email through SMTP using this CLI.
+This CLI not only sends email but also keeps track of the actually email activity like whether the email is delivered, bounced, opened, clicked etc. And, all these data will be available to you in real time.
+
+This CLI is developed in generic way. So that, even if you are not using Pepipost you can send email through other SMTP using this CLI.
 
 For apiEmail and tracking of the email you need to have [Pepipost](http://www.pepipost.com/?utm_campaign=GitHublinuxagent&utm_medium=Github&utm_source=Githublinuxagent) account.
 
