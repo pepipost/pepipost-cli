@@ -1,4 +1,4 @@
-# Pepipost-Cli { Linux :penguin:}
+# Pepipost-cli :penguin:
 
 ![pepipost-cli](http://app1.falconide.com/integration_imgs/pepi-cli.png)
 
