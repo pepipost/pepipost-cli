@@ -1,5 +1,7 @@
 # Pepipost-Cli { Linux :penguin:}
 
+![pepipost-cli](http://app1.falconide.com/integration_imgs/pepi-cli.png)
+
 ## Introduction
 
 Linux agent for Pepipost is developed to send email using command line interface(CLI). This CLI not only sends email but also keeps track of emails. you can send emails using both SMTP and API.
