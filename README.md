@@ -62,7 +62,7 @@ replace the credentials with your account and copy paste below in your ~/.bashrc
 ```shell 
 export PEPISMTPPASS="myaccount@345"
 export PEPISMTPUSER="smtpusernameispepi"
-export PEPIKEY="e8a874fbd6f35fffdsafdsfa230879205"
+export PEPIKEY="e8a874fbd6f35fffdsaXXXXXfa230879205"
 
 ```
 
